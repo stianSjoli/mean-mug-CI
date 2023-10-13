@@ -30,4 +30,9 @@ The architecture will based on the following tech stack
 * CI: Dagger
 * CD: ArgoCD on minikube
 
+#### Mage
+I come from a C and OS heavy bachelor degree (and was scheduled as a teaching assistant for OS course at UIO). Thus, makefiles are something I only associate with (efficient (dependent on how good the makefile was)) (re-)compiling and deleting software binaries for low level languages like C. Makefiles are hard to read and hard to write (from Mage). Mage could be used with their description of targets, and Mage as a CLI tool - but the origin story seems odd for my association with makefiles. 
+
+#### Skaffold
+I might have tested skaffold if the documentation was better. 
 
