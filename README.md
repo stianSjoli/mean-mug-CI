@@ -24,7 +24,7 @@ The architecture that would be safest to implement based on time, and my previou
 
 ### The solution 
 The architecture will based on the following tech stack
-* Kubernetes: minikube on home network with inbound routing denied (so no push from webhooks, only pulls) 
+* Kubernetes: minikube on home network with inbound initiated requests denied (so no push from webhooks, only pulls) 
 * Container registry: Dockerhub or minikube docker registry
 * Git: GitHub
 * CI: Dagger
