@@ -1,0 +1,6 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: coop-dev
+  labels:
+    name: coop-dev
