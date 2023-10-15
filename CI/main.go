@@ -4,10 +4,10 @@ import (
 	"context"
 	"dagger.io/dagger"
 	"fmt"
+	"math"
+	"math/rand"
 	"os"
 	"sync"
-    "math"
-    "math/rand"
 )
 
 func main() {
@@ -18,7 +18,7 @@ func main() {
 		test(ctx)
 		wg.Done()
 	}()
-    go func() {
+	go func() {
 		build(ctx)
 		wg.Done()
 	}()
@@ -40,23 +40,19 @@ func test(ctx context.Context) {
 	fmt.Println(out)
 }
 
-func build(ctx context.Context) * container {
-    client, err := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
+func build(ctx context.Context) *dagger.Container {
+	client, err := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	errorCheck(err)
 	root := client.Host().Directory(".")
 	defer client.Close()
-    image, err := root.
-        DockerBuild()
-    errorCheck(err)
-    return image 
+	return root.DockerBuild()
 }
 
 func publish(ctx context.Context) {
-    image := build(ctx)
-    ref, err := image.
-        Publish(ctx, fmt.Sprintf("ttl.sh/hello-dagger-%.0f", math.Floor(rand.Float64()*10000000))) //#nosec
-    errorCheck(err)
-    fmt.Printf("Published image to :%s\n", ref)
+	image := build(ctx)
+	ref, err := image.Publish(ctx, fmt.Sprintf("ttl.sh/hello-dagger-%.0f", math.Floor(rand.Float64()*10000000))) //#nosec
+	errorCheck(err)
+	fmt.Printf("Published image to :%s\n", ref)
 }
 
 func errorCheck(err error) {
