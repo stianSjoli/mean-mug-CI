@@ -1,6 +1,6 @@
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: coop-dev
+  name: app-space
   labels:
-    name: coop-dev
+    name: app-space
