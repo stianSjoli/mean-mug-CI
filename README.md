@@ -27,7 +27,7 @@ The architecture will based on the following tech stack
 * Kubernetes: minikube on home network with inbound initiated requests denied (so no push from webhooks, only pulls from within my network) 
 * Container registry: Dockerhub or minikube docker registry
 * Git: GitHub
-* CI: Dagger
+* CI: Dagger and Github Actions 
 * CD: ArgoCD on minikube
 
 #### Mage
