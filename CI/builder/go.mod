@@ -2,7 +2,10 @@ module example.com/mean-mug-ci
 
 go 1.21.3
 
-require dagger.io/dagger v0.8.8
+require (
+	dagger.io/dagger v0.8.8
+	gopkg.in/yaml.v3 v3.0.1
+)
 
 require (
 	github.com/99designs/gqlgen v0.17.31 // indirect
