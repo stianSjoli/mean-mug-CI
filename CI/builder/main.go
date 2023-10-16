@@ -45,9 +45,9 @@ func test(ctx context.Context) {
 func build(ctx context.Context) *dagger.Container {
 	client, err := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	errorCheck(err)
-	root := client.Host().Directory("./App/")
+	root := client.Host().Directory(".")
 	defer client.Close()
-	return root.DockerBuild()
+	return root.DockerBuild().WithDirectory("/App", root)
 }
 
 func publish(ctx context.Context) {
