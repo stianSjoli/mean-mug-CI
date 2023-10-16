@@ -12,7 +12,8 @@ import (
 
 func main() {
 	ctx := context.Background()
-	var wg sync.WaitGroup
+	//var wg sync.WaitGroup
+	/*
 	wg.Add(2)
 	go func() {
 		test(ctx)
@@ -23,6 +24,8 @@ func main() {
 		wg.Done()
 	}()
 	wg.Wait()
+	*/
+	publish(ctx)	
 }
 
 func test(ctx context.Context) {
