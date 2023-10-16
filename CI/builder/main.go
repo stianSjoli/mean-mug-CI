@@ -7,7 +7,6 @@ import (
 	"math"
 	"math/rand"
 	"os"
-	"sync"
 )
 
 func main() {
