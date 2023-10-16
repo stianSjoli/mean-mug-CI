@@ -84,7 +84,7 @@ func writeManifest(manifest Manifest, path string) {
 }	
 
 func main() {
-	dir, dirErr = os.Getwd()
+	dir, dirErr := os.Getwd()
 	fmt.Println(dir)
 	errorCheck(dirErr)
 	ctx := context.Background()
