@@ -29,7 +29,11 @@ jobs:
         curl -L https://dl.dagger.io/dagger/install.sh | sh 
     - name: run dagger
       run: cd CI/builder && dagger run go run main.go
-          
+    - name: commit
+      run: |
+        git add ArgoCD/deployment.yml
+        git commit -m "feat(ci): automatic commit"
+        git push origin master        
   #build:
   #  runs-on: ubuntu-latest
   #  needs: [test]
