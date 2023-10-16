@@ -89,9 +89,14 @@ func main() {
 	errorCheck(dirErr)
 	ctx := context.Background()
 	imageRef := publish(ctx)
+	dir, dirErr := os.Getwd()
+	fmt.Println(dir)
+	errorCheck(dirErr)
+	/*
 	manifest := readManifest("./ArgoCD/deployment.yml")
 	new_manifest := updateManifest(manifest, imageRef)
 	writeManifest(new_manifest, "./ArgoCD/deployment.yml")
+	*/
 }
 
 func test(ctx context.Context) {
