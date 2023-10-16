@@ -26,7 +26,7 @@ jobs:
         cd /usr/local
         curl -L https://dl.dagger.io/dagger/install.sh | sh 
     - name: run dagger
-      run: dagger run go run CI/builder/main.go
+      run: cd CI/builder && dagger run go run main.go
           
   #build:
   #  runs-on: ubuntu-latest
