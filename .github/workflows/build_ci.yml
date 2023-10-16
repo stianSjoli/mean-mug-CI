@@ -7,8 +7,10 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - CI/
+      - CI/builder/*.*
+      - CI/trigger/*.*
       - .github/workflows/build_ci.yml
+
   pull_request:
     branches: [ "main" ]
 
