@@ -86,14 +86,10 @@ func writeManifest(manifest Manifest, path string) {
 func main() {
 	ctx := context.Background()
 	imageRef := publish(ctx)
-	//dirPath, dirErr := os.Getwd()
-	//fmt.Println(imageRef)
-	//errorCheck(dirErr)
 	manifestPath := "../../ArgoCD/deployment.yml"
 	manifest := readManifest(manifestPath)
 	new_manifest := updateManifest(manifest, imageRef)
 	writeManifest(new_manifest, manifestPath)
-	*/
 }
 
 func test(ctx context.Context) {
