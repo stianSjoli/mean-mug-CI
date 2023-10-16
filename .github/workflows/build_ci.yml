@@ -21,11 +21,13 @@ jobs:
       uses: actions/setup-go@v4
       with:
         go-version: '1.21.3'
-
-    - name: Build builder
-      run: cd CI/builder && go build
-    - name: Build trigger
-      run: cd CI/trigger && go build  
+    - name: install dagger cli 
+      run: |
+        cd /usr/local
+        curl -L https://dl.dagger.io/dagger/install.sh | sh 
+    - name: run dagger
+      run: dagger run go run CI/builder/main.go
+          
   #build:
   #  runs-on: ubuntu-latest
   #  needs: [test]
