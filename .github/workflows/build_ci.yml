@@ -31,6 +31,8 @@ jobs:
       run: cd CI/builder && dagger run go run main.go
     - name: commit
       run: |
+        git config user.email "mean-mugin-ci@example.com"
+        git config user.name "Your Name"
         git add ArgoCD/deployment.yml
         git commit -m "feat(ci): automatic commit"
         git push origin master        
