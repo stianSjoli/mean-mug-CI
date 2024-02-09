@@ -17,6 +17,6 @@ spec:
         spec:
             containers:
                 - name: nginx-server
-                  image: test
+                  image: test_new
                   ports:
                     - containerPort: 8080
