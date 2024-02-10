@@ -12,8 +12,8 @@ import (
 )
 
 func Test(ctx context.Context) {
-	client, err := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
-	errorCheck(err)
+	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
+	errorCheck(errConnect)
 	root := client.Host().Directory(".")
 	defer client.Close()
 	_, err := client.Container().
