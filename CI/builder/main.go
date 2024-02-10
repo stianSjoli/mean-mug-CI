@@ -16,7 +16,7 @@ func Test(ctx context.Context) {
 	errorCheck(err)
 	root := client.Host().Directory(".")
 	defer client.Close()
-	out, err := client.Container().
+	_, err := client.Container().
 		From("golang:latest").
 		WithDirectory("/", root).
 		WithWorkdir("/").
@@ -34,7 +34,7 @@ func Build(ctx context.Context) *dagger.Container {
 }
 
 func Publish(ctx context.Context) string {
-	image := build(ctx)
+	image := Build(ctx)
 	ref, err := image.Publish(ctx, fmt.Sprintf("ttl.sh/app-%.0f", math.Floor(rand.Float64()*10000000)))
 	errorCheck(err)
 	fmt.Printf("Published image to :%s\n", ref)
