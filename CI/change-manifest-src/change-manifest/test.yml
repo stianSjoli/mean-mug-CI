@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: test
+  name: nginx-server
+  labels:
+    app: nginx-server 
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-server
+  template:
+    metadata:
+      labels:
+        app: nginx-server
+    spec:
+      containers:
+      - name: nginx-server
+        image: docker.io/pasient0/simple-server:signed
+        ports:
+        - containerPort: 8080
