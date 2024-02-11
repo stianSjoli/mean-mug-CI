@@ -11,8 +11,8 @@ Examples of supporting systems:
 
 It is also stated to consider using Dagger or Mage to demonstrate proficiency with Go. The case is open ended and can be freely interpreted with own assumptions and decisions.   
 
-## Thought process 
-How the system should follow "GitOps principles", and also what developers associate with "GitOps" vs "DevOps", can be an interesting topic in itself. "GitOps" is now commonly associated with using Git for versioning infrastructure code ("Infrastructure as code") and Git pull requests to manage and deploy infrastructure. Thes terms, "DevOps" and "GitOps" might have been closer in their earlier days, but had a divergent evolution as a consequence of more automation and evolution of platform tools. Thus, I feel "GitOps" would be more in the configuration and deployment of the supporting systems. The case also states that the platform should enable developers to deploy their containers with ease, which is in the "DevOps" domain. In that interpretation, the proposed solution will not follow "GitOps" principles to a large extent as supporting system setup will not be automated. However, a "GitOps"-oriented statement is that complex configuration should be allowed, meaning that it should be allowed to add arbitrary Kubernetes resources. Also, some focus on the fact that a GitOps principle is git as the single truth of change (for the platform), and my suggested solution will follow that principle.
+## Thought process - "start early fail early"
+I was completely wrong about dagger from the start of the implementation. I thought it would completely remove Github action, and would then require alot more features (commit trigger, run on a defined vm/container, configuration parser etc.). And I thought about scaling/reuse/generalization way too early. I see now that a combination between mage, dagger and Github action is the way to go.   
 
 ### The safe solution 
 The architecture that would be safest to implement based on time, and my previous experiences would consist of the following tech stack
@@ -30,9 +30,10 @@ The architecture will based on the following tech stack
 * CI: Dagger and Github Actions 
 * CD: ArgoCD on minikube
 
-#### Mage
-I come from a C and OS heavy bachelor degree (and was scheduled as a teaching assistant for OS course at UIO). Thus, makefiles are something I only associate with (efficient (dependent on how good the makefile was)) (re-)compiling and deleting software binaries for low level languages like C. Makefiles are hard to read and hard to write (from Mage). Mage could be used with their description of targets, and Mage as a CLI tool - but the origin story seems odd for my association with makefiles. 
+#### What is missing 
 
-#### Skaffold
-I might have tested skaffold if the documentation was better. 
+* lots more testing
+* more work on the triggering of CD (I thought it would work to make a k8 yaml parser and automatic commit on the repo to initiate a ArgoCD deployment)
+* branching (publish on main (publish) and build on feature branches)  
+
 
