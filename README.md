@@ -35,5 +35,6 @@ The architecture will based on the following tech stack
 * lots more testing
 * more work on the triggering of CD (I thought it would work to make a k8 yaml parser and automatic commit on the repo to initiate a ArgoCD deployment)
 * branching (publish on main (publish) and build on feature branches)  
-
+* I think I would explore "adding arbitrary kubernetes resources" on a separate git repo or a separate folder from resources associated with the App deployment
+* my solution is assumed only sync from git repo and not from cluster to github (inline with GitOps)   
 
