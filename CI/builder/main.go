@@ -18,8 +18,8 @@ func Test(ctx context.Context) {
 	defer client.Close()
 	_, err := client.Container().
 		From("golang:latest").
-		WithDirectory("/", root).
-		WithWorkdir("/").
+		WithDirectory("/App", root).
+		WithWorkdir("/App").
 		WithExec([]string{"go", "test"}).
 		Stderr(ctx)
 	errorCheck(err)
