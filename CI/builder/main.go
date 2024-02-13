@@ -9,16 +9,23 @@ import (
 	//"math"
 	//"math/rand"
 	"os"
+	"strings"
 )
+
+func appDirectory() string {
+	current, err := os.Getwd()
+	errorCheck(err)
+	return strings.Replace(current, "CI/builder", "App", 1)
+}
 
 func Test(ctx context.Context) {
 	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	errorCheck(errConnect)
-	root := client.Host().Directory(".")
+	root := client.Host().Directory(appDirectory())
 	defer client.Close()
 	_, err := client.Container().
 		From("golang:latest").
-		WithDirectory("/App", root).
+		WithMountedDirectory("/App", root).
 		WithWorkdir("/App").
 		WithExec([]string{"go", "test"}).
 		Stderr(ctx)
