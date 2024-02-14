@@ -5,9 +5,8 @@ name: App:branch
 
 on:
   push:
-    branches: 
-      - '**'
-      - '!master'
+    branches-ignore:
+      - master
     paths:
       - App/**
   
