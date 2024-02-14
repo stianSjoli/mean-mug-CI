@@ -1,0 +1,43 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: CI:branch
+
+on:
+  push:
+    branches: 
+     - main
+    paths:
+      - CI/builder
+  
+jobs:    
+  build_CI:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: golang setup 
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.22
+      - name: mage build
+        uses: magefile/mage-action@v3
+        with:
+          version: latest
+          args: buildCI
+          workdir: ./CI/builder
+  build_App:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: golang setup 
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.22
+      - name: mage build
+        uses: magefile/mage-action@v3
+        with:
+          version: latest
+          args: buildApp
+          workdir: ./CI/builder    
