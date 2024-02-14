@@ -6,7 +6,8 @@ name: App:main
 on:
   push:
     branches: 
-     - main
+      - '**'
+      - '!master'
     paths:
       - App/**
   
