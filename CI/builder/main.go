@@ -6,6 +6,9 @@ import (
 	"context"
 	"dagger.io/dagger"
 	"os"
+	"fmt"
+	"math"
+	"math/rand"
 	"strings"
 )
 
@@ -23,8 +26,8 @@ func BuildCI(ctx context.Context) {
 	root := client.Host().Directory(".")
 	_, err := client.Container().
 		From("golang:latest").
-		WithMountedDirectory("/CI", root).
-		WithWorkdir("/CI").
+		WithMountedDirectory("/CI/builder", root).
+		WithWorkdir("/CI/builder").
 		WithExec([]string{"go", "build"}).
 		Stderr(ctx)
 	errorCheck(err)
@@ -58,19 +61,30 @@ func BuildApp(ctx context.Context) {
 	errorCheck(err)
 }
 
-/*
-func Publish(ctx context.Context) string {
-	client, err := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
-	errorCheck(err)
-	root := client.Host().Directory(".")
+
+func PublishApp(ctx context.Context) {
+	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
+	errorCheck(errConnect)
+	root := client.Host().Directory(appDirectory())
 	defer client.Close()
-	root.DockerBuild().WithDirectory("/App", root)
-	ref, err := image.Publish(ctx, fmt.Sprintf("ttl.sh/app-%.0f", math.Floor(rand.Float64()*10000000)))
+
+	builder := client.Container().
+		From("golang:latest").
+		WithDirectory("/src", root).
+		WithWorkdir("/src").
+		WithEnvVariable("CGO_ENABLED", "0").
+		WithExec([]string{"go", "build", "-o", "app"})
+
+	// publish binary on alpine base
+	prodImage := client.Container().
+		From("alpine").
+		WithFile("/bin/app", builder.File("/src/app")).
+		WithEntrypoint([]string{"/bin/app"})
+	ref, err := prodImage.Publish(ctx, fmt.Sprintf("ttl.sh/app-%.0f", math.Floor(rand.Float64()*10000000)))
 	errorCheck(err)
 	fmt.Printf("Published image to :%s\n", ref)
-	return ref 
 }
-*/
+
 func errorCheck(err error) {
 	if err != nil {
 		panic(err)
