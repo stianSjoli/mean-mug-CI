@@ -20,9 +20,9 @@ func appDirectory() string {
 
 func Test(ctx context.Context) {
 	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
+	defer client.Close()
 	errorCheck(errConnect)
 	root := client.Host().Directory(appDirectory())
-	defer client.Close()
 	_, err := client.Container().
 		From("golang:latest").
 		WithMountedDirectory("/App", root).
@@ -33,12 +33,19 @@ func Test(ctx context.Context) {
 }
 
 func Build(ctx context.Context) {
-	client, err := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
-	errorCheck(err)
-	root := client.Host().Directory(".")
+	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	defer client.Close()
-	root.DockerBuild().WithDirectory("/App", root)
+	errorCheck(errConnect)
+	root := client.Host().Directory(appDirectory())
+	_, err := client.Container().
+		From("golang:latest").
+		WithMountedDirectory("/App", root).
+		WithWorkdir("/App").
+		WithExec([]string{"go", "build", "-o main"}).
+		Stderr(ctx)
+	errorCheck(err)
 }
+
 /*
 func Publish(ctx context.Context) string {
 	client, err := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
