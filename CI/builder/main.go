@@ -41,7 +41,7 @@ func Build(ctx context.Context) {
 		From("golang:latest").
 		WithMountedDirectory("/App", root).
 		WithWorkdir("/App").
-		WithExec([]string{"go", "build -o main"}).
+		WithExec([]string{"go", "build"}).
 		Stderr(ctx)
 	errorCheck(err)
 }
