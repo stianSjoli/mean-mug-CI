@@ -5,9 +5,8 @@ name: CI:branch
 
 on:
   push:
-    branches: 
-      - '**'
-      - '!master'
+    branches-ignore:
+      - master
     paths:
       - CI/builder/**
   
