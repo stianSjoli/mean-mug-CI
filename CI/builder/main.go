@@ -10,6 +10,8 @@ import (
 	"math"
 	"math/rand"
 	"strings"
+	"example.com/git"
+    "example.com/manifest"
 )
 
 func appDirectory() string {
@@ -62,7 +64,7 @@ func BuildApp(ctx context.Context) {
 }
 
 
-func PublishApp(ctx context.Context) {
+func DeployApp(ctx context.Context) {
 	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	errorCheck(errConnect)
 	root := client.Host().Directory(appDirectory())
@@ -83,6 +85,14 @@ func PublishApp(ctx context.Context) {
 	ref, err := prodImage.Publish(ctx, fmt.Sprintf("ttl.sh/app-%.0f", math.Floor(rand.Float64()*10000000)))
 	errorCheck(err)
 	fmt.Printf("Published image to :%s\n", ref)
+	dirName := "./tmp"
+    manifestPath := dirName + "/" + *manifestfile
+    m := manifest.ReadManifest(manifestPath)
+    fmt.Println(m)
+    updatedM := manifest.UpdateManifest(m, *imageRef)
+    manifest.WriteManifest(updatedM, manifestPath)
+    fmt.Println(git.Commit(*manifestfile,repo))
+    git.Push(repo, *token)
 }
 
 func errorCheck(err error) {
