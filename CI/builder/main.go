@@ -5,9 +5,6 @@ package main
 import (
 	"context"
 	"dagger.io/dagger"
-	//"fmt"
-	//"math"
-	//"math/rand"
 	"os"
 	"strings"
 )
@@ -18,7 +15,22 @@ func appDirectory() string {
 	return strings.Replace(current, "CI/builder", "App", 1)
 }
 
-func Test(ctx context.Context) {
+
+func BuildCI(ctx context.Context) {
+	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
+	defer client.Close()
+	errorCheck(errConnect)
+	root := client.Host().Directory(".")
+	_, err := client.Container().
+		From("golang:latest").
+		WithMountedDirectory("/CI", root).
+		WithWorkdir("/CI").
+		WithExec([]string{"go", "build"}).
+		Stderr(ctx)
+	errorCheck(err)
+}
+
+func TestApp(ctx context.Context) {
 	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	defer client.Close()
 	errorCheck(errConnect)
@@ -32,7 +44,7 @@ func Test(ctx context.Context) {
 	errorCheck(err)
 }
 
-func Build(ctx context.Context) {
+func BuildApp(ctx context.Context) {
 	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	defer client.Close()
 	errorCheck(errConnect)
