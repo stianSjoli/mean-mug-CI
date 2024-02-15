@@ -1,5 +1,5 @@
 # coop-dev-ex 
-[![App:main](https://github.com/stianSjoli/mean-mug-CI/actions/workflows/branch_app.yml/badge.svg)](https://github.com/stianSjoli/mean-mug-CI/actions/workflows/branch_app.yml)
+[![App:main](https://github.com/stianSjoli/mean-mug-CI/actions/workflows/main_app.yml/badge.svg)](https://github.com/stianSjoli/mean-mug-CI/actions/workflows/main_app.yml)
 
 ## The Case 
 The case given is to create a small developer platform that enables developers to deploy their containers with ease. The solution should follow GitOps principles, and by default it should be easy to use. However, complex configuration should be allowed, meaning that it should be allowed to add arbitrary Kubernetes resources. On commit it should run CI, build and publish the image, and update the deployment in kubernetes. Developers should not have direct access to the kubernetes cluster. The interesting part of the assignment is the developer experience, so avoid to much configuration of what is referred to as "supporting systems". The case gives these examples of supporting systems that can be used. 

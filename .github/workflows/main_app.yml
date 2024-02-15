@@ -9,6 +9,7 @@ on:
      - main
     paths:
       - App/**
+      - .github/workflows/main_app.yml
   
 jobs:
   test:
