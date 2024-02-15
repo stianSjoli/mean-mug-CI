@@ -6,7 +6,7 @@ name: App:branch
 on:
   push:
     branches-ignore:
-      - master
+      - main
     paths:
       - App/**
       - .github/workflows/branch_app.yml 
