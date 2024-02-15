@@ -82,17 +82,16 @@ func DeployApp(ctx context.Context) {
 		From("alpine").
 		WithFile("/bin/app", builder.File("/src/app")).
 		WithEntrypoint([]string{"/bin/app"})
-	ref, err := prodImage.Publish(ctx, fmt.Sprintf("ttl.sh/app-%.0f", math.Floor(rand.Float64()*10000000)))
+	imageRef, err := prodImage.Publish(ctx, fmt.Sprintf("ttl.sh/app-%.0f", math.Floor(rand.Float64()*10000000)))
 	errorCheck(err)
-	fmt.Printf("Published image to :%s\n", ref)
-	dirName := "./tmp"
-    manifestPath := dirName + "/" + *manifestfile
-    m := manifest.ReadManifest(manifestPath)
-    fmt.Println(m)
-    updatedM := manifest.UpdateManifest(m, *imageRef)
-    manifest.WriteManifest(updatedM, manifestPath)
-    fmt.Println(git.Commit(*manifestfile,repo))
-    git.Push(repo, *token)
+	fmt.Printf("Published image to :%s\n", imageRef)
+    manifestPath := "../../ArgoCD/deployment.yml"
+    currentManifest := manifest.ReadManifest(manifestPath)
+    fmt.Println(currentManifest)
+    newManifest := manifest.UpdateManifest(currentManifest, imageRef)
+    manifest.WriteManifest(newManifest, manifestPath)
+    fmt.Println(git.Commit(manifestPath))
+    //git.Push(repo, *token)
 }
 
 func errorCheck(err error) {
