@@ -14,6 +14,7 @@ import (
     "example.com/manifest"
 )
 
+
 func appDirectory() string {
 	current, err := os.Getwd()
 	errorCheck(err)
@@ -64,7 +65,7 @@ func BuildApp(ctx context.Context) {
 }
 
 
-func DeployApp(ctx context.Context) {
+func DeployApp(ctx context.Context, manifestPath string, repoUrl string, token string) {
 	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	errorCheck(errConnect)
 	root := client.Host().Directory(appDirectory())
@@ -85,13 +86,17 @@ func DeployApp(ctx context.Context) {
 	imageRef, err := prodImage.Publish(ctx, fmt.Sprintf("ttl.sh/app-%.0f", math.Floor(rand.Float64()*10000000)))
 	errorCheck(err)
 	fmt.Printf("Published image to :%s\n", imageRef)
-    manifestPath := "../../ArgoCD/deployment.yml"
-    currentManifest := manifest.ReadManifest(manifestPath)
+	dirPath := "./tmp"
+	fmt.Println(manifestPath)
+	repo := git.Clone(dirPath, repoUrl, token)
+    currentManifest := manifest.ReadManifest(dirPath + "/" + manifestPath)
     fmt.Println(currentManifest)
     newManifest := manifest.UpdateManifest(currentManifest, imageRef)
-    manifest.WriteManifest(newManifest, manifestPath)
-    fmt.Println(git.Commit(manifestPath))
-    //git.Push(repo, *token)
+    manifest.WriteManifest(newManifest, dirPath + "/" + manifestPath)
+    fmt.Println(git.Commit(manifestPath, repo))
+    git.Push(repo, token)
+    errRemove := os.RemoveAll(dirPath)
+    errorCheck(errRemove)
 }
 
 func errorCheck(err error) {

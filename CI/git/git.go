@@ -26,7 +26,6 @@ func Clone(path string, url string, token string) *git.Repository {
 func Commit(filePath string, repo *git.Repository) plumbing.Hash {
     worktree, worktreeError := repo.Worktree()
     errorCheck(worktreeError)
-    fmt.Println(filePath)
     hash, addError := worktree.Add(filePath)
     fmt.Println(hash)
     errorCheck(addError)
