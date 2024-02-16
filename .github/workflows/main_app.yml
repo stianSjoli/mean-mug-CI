@@ -46,8 +46,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [build, test]
-    permissions:
-      actions: write-all
+    permissions: write-all
     steps:
       - name: checkout
         uses: actions/checkout@v4
