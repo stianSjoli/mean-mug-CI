@@ -6,7 +6,7 @@ name: CI:branch
 on:
   push:
     branches-ignore:
-      - master
+      - main
     paths:
       - CI/builder/**
   
