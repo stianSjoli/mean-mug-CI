@@ -58,5 +58,5 @@ jobs:
         uses: magefile/mage-action@v3
         with:
           version: latest
-          args: deployApp ArgoCD/deployment.yml ${{ github.repositoryUrl }} ${{ github.token }}
+          args: deployApp ArgoCD/deployment.yml https://github.com/stianSjoli/mean-mug-CI.git ${{ github.token }}
           workdir: ./CI/builder    
