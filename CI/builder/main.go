@@ -70,30 +70,29 @@ func DeployApp(ctx context.Context, manifestPath string, repoUrl string, token s
 	errorCheck(errConnect)
 	root := client.Host().Directory(appDirectory())
 	defer client.Close()
+	image := func() *dagger.Container {
+		builder := client.Container().
+			From("golang:latest").
+			WithDirectory("/src", root).
+			WithWorkdir("/src").
+			WithEnvVariable("CGO_ENABLED", "0").
+			WithExec([]string{"go", "build", "-o", "app"})
 
-	builder := client.Container().
-		From("golang:latest").
-		WithDirectory("/src", root).
-		WithWorkdir("/src").
-		WithEnvVariable("CGO_ENABLED", "0").
-		WithExec([]string{"go", "build", "-o", "app"})
+		prodImage := client.Container().
+			From("alpine").
+			WithFile("/bin/app", builder.File("/src/app")).
+			WithEntrypoint([]string{"/bin/app"})
+		return prodImage
+	}()
 
-	// publish binary on alpine base
-	prodImage := client.Container().
-		From("alpine").
-		WithFile("/bin/app", builder.File("/src/app")).
-		WithEntrypoint([]string{"/bin/app"})
-	imageRef, err := prodImage.Publish(ctx, fmt.Sprintf("ttl.sh/app-%.0f", math.Floor(rand.Float64()*10000000)))
+	imageRef, err := image.Publish(ctx, fmt.Sprintf("ttl.sh/app-%.0f", math.Floor(rand.Float64()*10000000)))
 	errorCheck(err)
-	fmt.Printf("Published image to :%s\n", imageRef)
 	dirPath := "./tmp"
-	fmt.Println(manifestPath)
 	repo := git.Clone(dirPath, repoUrl, token)
     currentManifest := manifest.ReadManifest(dirPath + "/" + manifestPath)
-    fmt.Println(currentManifest)
     newManifest := manifest.UpdateManifest(currentManifest, imageRef)
     manifest.WriteManifest(newManifest, dirPath + "/" + manifestPath)
-    fmt.Println(git.Commit(manifestPath, repo))
+    git.Commit(manifestPath, repo)
     git.Push(repo, token)
     errRemove := os.RemoveAll(dirPath)
     errorCheck(errRemove)
