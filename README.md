@@ -1,4 +1,4 @@
-# coop-dev-ex 
+# mean-mug-CI 
 [![App:main](https://github.com/stianSjoli/mean-mug-CI/actions/workflows/main_app.yml/badge.svg)](https://github.com/stianSjoli/mean-mug-CI/actions/workflows/main_app.yml)
 
 ## The Case 
@@ -26,16 +26,8 @@ The architecture that would be safest to implement based on time, and my previou
 ### The solution 
 The architecture will based on the following tech stack
 * Kubernetes: minikube on home network with inbound initiated requests denied (so no push from webhooks, only pulls from within my network) 
-* Container registry: Dockerhub or minikube docker registry
+* Container registry: ttl.sh ("easy reference for unathorised pulls, but ok to use now for illustration purposes")
 * Git: GitHub
-* CI: Dagger and Github Actions 
+* CI: Dagger, mage and Github Actions 
 * CD: ArgoCD on minikube
-
-#### What is missing 
-
-* lots more testing
-* more work on the triggering of CD (I thought it would work to make a k8 yaml parser and automatic commit on the repo to initiate a ArgoCD deployment)
-* branching (publish on main (publish) and build on feature branches)  
-* I think I would explore "adding arbitrary kubernetes resources" on a separate git repo or a separate folder from resources associated with the App deployment
-* my solution assumes only sync from git repo and not from cluster to github (inline with GitOps)   
-
+   
