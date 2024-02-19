@@ -36,6 +36,8 @@ func BuildCI(ctx context.Context) {
 	errorCheck(err)
 }
 
+
+
 func TestApp(ctx context.Context) {
 	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	defer client.Close()
@@ -84,7 +86,6 @@ func DeployApp(ctx context.Context, manifestPath string, repoUrl string, token s
 			WithEntrypoint([]string{"/bin/app"})
 		return prodImage
 	}()
-
 	imageRef, err := image.Publish(ctx, fmt.Sprintf("ttl.sh/app-%.0f", math.Floor(rand.Float64()*10000000)))
 	errorCheck(err)
 	dirPath := "./tmp"
