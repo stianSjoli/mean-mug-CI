@@ -66,7 +66,6 @@ func BuildApp(ctx context.Context) {
 	errorCheck(err)
 }
 
-
 func DeployApp(ctx context.Context, manifestPath string, repoUrl string, token string) {
 	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	errorCheck(errConnect)
