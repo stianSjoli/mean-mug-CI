@@ -36,8 +36,6 @@ func BuildCI(ctx context.Context) {
 	errorCheck(err)
 }
 
-
-
 func TestApp(ctx context.Context) {
 	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	defer client.Close()
