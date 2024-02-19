@@ -17,6 +17,6 @@ spec:
         spec:
             containers:
                 - name: nginx
-                  image: ttl.sh/app-487625@sha256:d8181305610040c18b02b322d0cef6f59cdf468bedc388fa53f59dcdaf8496bf
+                  image: ttl.sh/app-7986033@sha256:90fbee5ada5036e7bd1f498fd93e88f84896d646fb7def120eb96a4bbac7260c
                   ports:
                     - containerPort: 80
