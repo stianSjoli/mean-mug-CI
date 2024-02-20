@@ -82,7 +82,7 @@ func DeployApp(ctx context.Context, manifestPath string, repoUrl string, token s
 			From("alpine").
 			WithFile("/bin/app", builder.File("/src/app")).
 			WithEntrypoint([]string{"/bin/app"})
-		ref, err := prodImage.Publish(ctx, fmt.Sprintf("ttl.sh/app-%.0f:20m", math.Floor(rand.Float64()*10000000)))
+		ref, err := prodImage.Publish(ctx, fmt.Sprintf("ttl.sh/app-%.0f", math.Floor(rand.Float64()*10000000))) //default time to live is 1 hour
 		errorCheck(err)
 		imageRef <- ref 
 	}()
