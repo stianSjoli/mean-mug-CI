@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: nginx-deployment
+    name: server-deployment
     namespace: app-space
     labels:
-        app: nginx
+        app: server
 spec:
     replicas: 1
     selector:
         matchLabels:
-            app: nginx
+            app: server
     template:
         metadata:
             labels:
-                app: nginx
+                app: server
         spec:
             containers:
-                - name: nginx
+                - name: server
                   image: ttl.sh/app-1544399@sha256:56d1359897b334756f4cb8c32e549145f86c3d487cfb7605357e349565cecdc2
                   ports:
-                    - containerPort: 80
+                    - containerPort: 8181
