@@ -22,7 +22,7 @@ The architecture will based on the following tech stack
 
 ### Folders 
 
-* /platform: "owner" of this folder should be platform and yaml for more complex kubernetes resources should be commited here 
+* /platform: "owner" of this folder should be platform and yaml for more complex kubernetes resources should be commited here. Should be in separate repo.  
 * /ArgoCD: "owner" is the team or preferable reserved for automatic commits. Some commits will be done by team on services and other kubernetes resources connected to the application 
 * /CI: the dagger CI scripts together with modules for updating the kubernetes manifest with the image ref and ability to commit programmatically on the repo
 * /App: a simple application to work on to show that the pipelines forfills image build, publish and deploy to minikube cluster
