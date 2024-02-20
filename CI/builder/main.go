@@ -12,7 +12,6 @@ import (
 	"strings"
 	"example.com/git"
     "example.com/manifest"
-    "runtime"
 )
 
 
@@ -66,7 +65,6 @@ func BuildApp(ctx context.Context) {
 }
 
 func DeployApp(ctx context.Context, manifestPath string, repoUrl string, token string) {
-	runtime.GOMAXPROCS(2)
 	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	errorCheck(errConnect)
 	root := client.Host().Directory(appDirectory())
