@@ -3,17 +3,19 @@ package main
 import (
   "net/http"
   "github.com/gin-gonic/gin"
+  "math/rand"
+  "strconv"
 )
 
-func setupRouter() *gin.Engine {
+func setupRouter(number string) *gin.Engine {
   r := gin.Default()
   r.GET("/ping", func(c *gin.Context) {
-    c.String(http.StatusOK, "pong")
+    c.String(http.StatusOK, number)
   })
   return r
 }
 
 func main() {
-  r := setupRouter()
-  r.Run(":8080")
+  r := setupRouter(strconv.Itoa(rand.Intn(10000)))
+  r.Run(":8181")
 }
