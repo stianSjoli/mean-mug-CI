@@ -47,6 +47,8 @@ cd CI/builder
 mage deployApp "ArgoCD/deployment.yml"  https://github.com/stianSjoli/mean-mug-CI.git [GITHUB TOKEN with write permission here]  
 ```
 
+### Developer experience 
+will be presented ..
 
 
 
