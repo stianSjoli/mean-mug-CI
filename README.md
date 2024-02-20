@@ -27,6 +27,26 @@ The architecture will based on the following tech stack
 * /CI: the dagger CI scripts together with modules for updating the kubernetes manifest with the image ref and ability to commit programmatically on the repo
 * /App: a simple application to work on to show that the pipelines forfills image build, publish and deploy to minikube cluster
 
+### Remote Testing on repository
+A commit in /App will initiate the CI, and if test and build step are green, it will lead to a deploy to a minikube cluster.
+
+### Local Testing of CI (assumes mage install and docker deamon running) 
+How to run test step: 
+```
+cd CI/builder
+mage testApp 
+```
+How to run build step: 
+```
+cd CI/builder
+mage buildApp 
+```
+How to run deploy step: 
+```
+cd CI/builder
+mage deployApp "ArgoCD/deployment.yml"  https://github.com/stianSjoli/mean-mug-CI.git [GITHUB TOKEN with write permission here]  
+```
+
 
 
 
