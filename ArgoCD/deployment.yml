@@ -17,6 +17,6 @@ spec:
         spec:
             containers:
                 - name: server
-                  image: ttl.sh/app-1544399@sha256:56d1359897b334756f4cb8c32e549145f86c3d487cfb7605357e349565cecdc2
+                  image: ttl.sh/app-4698077@sha256:dfd780aa0d358cc240ddd930d1940ce0049235d1f50dc404eb3a61d1932a7b2c
                   ports:
                     - containerPort: 8181
