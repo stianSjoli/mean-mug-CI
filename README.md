@@ -12,22 +12,13 @@ Examples of supporting systems:
 
 It is also stated to consider using Dagger or Mage to demonstrate proficiency with Go. The case is open ended and can be freely interpreted with own assumptions and decisions.   
 
-## Thought process - "start early fail early"
-I was completely wrong about dagger from the start of the implementation. I thought it would completely remove Github action, and would then require alot more features (commit trigger, run on a defined vm/container, configuration parser etc.). And I thought about scaling/reuse/generalization way too early. I see now that a combination between mage, dagger and Github action is the way to go.   
-
-### The safe solution 
-The architecture that would be safest to implement based on time, and my previous experiences would consist of the following tech stack
-* Kubernetes: GKE
-* Container registry: GCP Artifact registry (or Dockerhub)
-* Git: GitHub
-* CI: GCP cloud build (not mentioned as an example)
-* CD: GCP cloud deploy (uses skaffold, also not mentioned as an example)    
-
 ### The solution 
 The architecture will based on the following tech stack
-* Kubernetes: minikube on home network with inbound initiated requests denied (so no push from webhooks, only pulls from within my network) 
+* Kubernetes: minikube
 * Container registry: ttl.sh ("easy reference for unathorised pulls, but ok to use now for illustration purposes")
 * Git: GitHub
 * CI: Dagger, mage and Github Actions 
 * CD: ArgoCD on minikube
+
+
    
