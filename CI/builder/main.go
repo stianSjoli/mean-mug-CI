@@ -70,7 +70,7 @@ func DeployApp(ctx context.Context, manifestPath string, repoUrl string, token s
 	root := client.Host().Directory(appDirectory())
 	defer client.Close()
 	imageRef := make(chan string)
-	go func() *dagger.Container {
+	go func() {
 		builder := client.Container().
 			From("golang:latest").
 			WithDirectory("/src", root).
@@ -90,8 +90,7 @@ func DeployApp(ctx context.Context, manifestPath string, repoUrl string, token s
 	dirPath := "./tmp"
 	repo := git.Clone(dirPath, repoUrl, token)
     currentManifest := manifest.ReadManifest(dirPath + "/" + manifestPath)
-    ref <- imageRef
-    newManifest := manifest.UpdateManifest(currentManifest, ref)
+    newManifest := manifest.UpdateManifest(currentManifest, <- imageRef)
     manifest.WriteManifest(newManifest, dirPath + "/" + manifestPath)
     git.Commit(manifestPath, repo)
     git.Push(repo, token)
