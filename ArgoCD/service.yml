@@ -8,5 +8,6 @@ spec:
   selector:
     app: server 
   ports:
-    - port: 8181 
+    - port: 8181
+      name: http
       targetPort: 8181
