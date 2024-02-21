@@ -4,7 +4,7 @@ metadata:
   name: server-service
   namespace: app-space
 spec: 
-  type: Loadbalancer
+  type: LoadBalancer
   selector:
     app: server 
   ports:
