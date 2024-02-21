@@ -47,6 +47,11 @@ cd CI/builder
 mage deployApp "ArgoCD/deployment.yml"  https://github.com/stianSjoli/mean-mug-CI.git [GITHUB TOKEN with write permission here]  
 ```
 
+### Testing with minkube 
+to give loadBalancer external ip:
+```
+minikube tunnel  
+```
 ### Developer experience 
 will be presented ..
 
