@@ -21,22 +21,7 @@ func appDirectory() string {
 	return strings.Replace(current, "CI/builder", "App", 1)
 }
 
-
-func BuildCI(ctx context.Context) {
-	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
-	defer client.Close()
-	errorCheck(errConnect)
-	root := client.Host().Directory(".")
-	_, err := client.Container().
-		From("golang:latest").
-		WithMountedDirectory("/CI/builder", root).
-		WithWorkdir("/CI/builder").
-		WithExec([]string{"go", "build"}).
-		Stderr(ctx)
-	errorCheck(err)
-}
-
-func TestApp(ctx context.Context) {
+func Test(ctx context.Context) {
 	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	defer client.Close()
 	errorCheck(errConnect)
@@ -50,7 +35,7 @@ func TestApp(ctx context.Context) {
 	errorCheck(err)
 }
 
-func BuildApp(ctx context.Context) {
+func Build(ctx context.Context) {
 	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	defer client.Close()
 	errorCheck(errConnect)
@@ -64,7 +49,7 @@ func BuildApp(ctx context.Context) {
 	errorCheck(err)
 }
 
-func DeployApp(ctx context.Context, manifestPath string, repoUrl string, token string) {
+func Deploy(ctx context.Context, manifestPath string, repoUrl string, token string) {
 	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	errorCheck(errConnect)
 	root := client.Host().Directory(appDirectory())
