@@ -11,7 +11,7 @@ import (
 	"math/rand"
 	"strings"
 	"example.com/git"
-    	"example.com/manifest"
+    "example.com/manifest"
 	"github.com/magefile/mage/mg"
 )
 
@@ -53,7 +53,7 @@ func (App) Build(ctx context.Context) {
 	errorCheck(err)
 }
 
-func (App) Deploy(ctx context.Context, manifestPath string, repoUrl string, token string) {
+func (App) Deploy(ctx context.Context, token string) {
 	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	errorCheck(errConnect)
 	root := client.Host().Directory(appDirectory())
@@ -77,10 +77,12 @@ func (App) Deploy(ctx context.Context, manifestPath string, repoUrl string, toke
 	}()
 	
 	dirPath := "./tmp"
+	manifestPath := dirPath + "/ArgoCD/deployment.yml"
+	repoUrl := "https://github.com/stianSjoli/mean-mug-CI.git"
 	repo := git.Clone(dirPath, repoUrl, token)
-    currentManifest := manifest.ReadManifest(dirPath + "/" + manifestPath)
+    currentManifest := manifest.ReadManifest(manifestPath)
     newManifest := manifest.UpdateManifest(currentManifest, <- imageRef)
-    manifest.WriteManifest(newManifest, dirPath + "/" + manifestPath)
+    manifest.WriteManifest(newManifest, manifestPath)
     git.Commit(manifestPath, repo)
     git.Push(repo, token)
     errRemove := os.RemoveAll(dirPath)
