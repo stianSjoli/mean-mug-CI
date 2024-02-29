@@ -11,8 +11,12 @@ import (
 	"math/rand"
 	"strings"
 	"example.com/git"
-    "example.com/manifest"
+    	"example.com/manifest"
+	"github.com/magefile/mage/mg"
 )
+
+type App mg.Namespace
+
 
 
 func appDirectory() string {
@@ -21,7 +25,7 @@ func appDirectory() string {
 	return strings.Replace(current, "CI/builder", "App", 1)
 }
 
-func Test(ctx context.Context) {
+func (App) Test(ctx context.Context) {
 	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	defer client.Close()
 	errorCheck(errConnect)
@@ -35,7 +39,7 @@ func Test(ctx context.Context) {
 	errorCheck(err)
 }
 
-func Build(ctx context.Context) {
+func (App) Build(ctx context.Context) {
 	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	defer client.Close()
 	errorCheck(errConnect)
@@ -49,7 +53,7 @@ func Build(ctx context.Context) {
 	errorCheck(err)
 }
 
-func Deploy(ctx context.Context, manifestPath string, repoUrl string, token string) {
+func (App) Deploy(ctx context.Context, manifestPath string, repoUrl string, token string) {
 	client, errConnect := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
 	errorCheck(errConnect)
 	root := client.Host().Directory(appDirectory())
