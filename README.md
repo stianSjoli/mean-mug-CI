@@ -10,17 +10,17 @@ A commit in /App will initiate the CI, and if test and build step are green, it 
 How to run test step: 
 ```
 cd CI/builder
-mage test 
+mage app:test 
 ```
 How to run build step: 
 ```
 cd CI/builder
-mage build 
+mage app:build 
 ```
 How to run deploy step: 
 ```
 cd CI/builder
-mage deploy "ArgoCD/deployment.yml"  https://github.com/stianSjoli/mean-mug-CI.git [GITHUB TOKEN with write permission here]  
+mage app:deploy [GITHUB TOKEN with write permission here]  
 ```
 
 
