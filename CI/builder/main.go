@@ -77,12 +77,12 @@ func (App) Deploy(ctx context.Context, token string) {
 	}()
 	
 	dirPath := "./tmp"
-	manifestPath := dirPath + "/ArgoCD/deployment.yml"
+	manifestPath := "ArgoCD/deployment.yml"
 	repoUrl := "https://github.com/stianSjoli/mean-mug-CI.git"
 	repo := git.Clone(dirPath, repoUrl, token)
-    currentManifest := manifest.ReadManifest(manifestPath)
+    currentManifest := manifest.ReadManifest(dirPath + "/" + manifestPath)
     newManifest := manifest.UpdateManifest(currentManifest, <- imageRef)
-    manifest.WriteManifest(newManifest, manifestPath)
+    manifest.WriteManifest(newManifest, dirPath + "/" + manifestPath)
     git.Commit(manifestPath, repo)
     git.Push(repo, token)
     errRemove := os.RemoveAll(dirPath)
