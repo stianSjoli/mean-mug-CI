@@ -103,6 +103,7 @@ func CI() {
 }
 
 func CD(token string) {
+	CI()
 	ctx, cancel := context.WithCancel(context.Background())
 	tc := TargetContext{cancel:cancel, ctx: ctx}
 	deploy(tc, token)
