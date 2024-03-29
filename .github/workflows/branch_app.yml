@@ -12,7 +12,7 @@ on:
       - .github/workflows/branch_app.yml 
   
 jobs:
-  test:
+  CI:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -26,22 +26,6 @@ jobs:
         uses: magefile/mage-action@v3
         with:
           version: latest
-          args: testApp
-          workdir: ./CI/builder
-      
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v4
-      - name: golang setup 
-        uses: actions/setup-go@v4
-        with:
-          go-version: 1.22
-      - name: mage build
-        uses: magefile/mage-action@v3
-        with:
-          version: latest
-          args: buildApp
+          args: ci
           workdir: ./CI/builder
          
