@@ -12,15 +12,15 @@ How to run test step:
 cd CI/builder
 mage app:test 
 ```
-How to run build step: 
+How to run CI step: 
 ```
 cd CI/builder
-mage app:build 
+mage ci 
 ```
 How to run deploy step: 
 ```
 cd CI/builder
-mage app:deploy [GITHUB TOKEN with write permission here]  
+mage cd [GITHUB TOKEN with write permission here]  
 ```
 
 
