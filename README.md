@@ -7,11 +7,6 @@ This repo allows me to play around with go (and mage, dagger), ttl.sh, ArgoCD an
 A commit in /App will initiate the CI, and if test and build step are green, it will lead to a deploy to a minikube cluster.
 
 ### Local Testing of CI (assumes mage install and docker deamon running) 
-How to run test step: 
-```
-cd CI/builder
-mage app:test 
-```
 How to run CI step: 
 ```
 cd CI/builder
